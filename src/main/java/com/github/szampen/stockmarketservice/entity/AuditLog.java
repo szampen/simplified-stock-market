@@ -17,6 +17,7 @@ public class AuditLog {
     @Column(nullable = false)
     private String walletId;
 
+    @Enumerated(EnumType.STRING) // Enum is saved as String instead of int (0/1)
     @Column(nullable = false)
     private ActionType action;
 
