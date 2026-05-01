@@ -7,6 +7,7 @@ import com.github.szampen.stockmarketservice.service.TradeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,13 +36,16 @@ public class WalletController {
     public ResponseEntity<Map<String, Object>> getWallet(@PathVariable String wallet_id){
         List<WalletStock> stocks = walletRepo.findAllByWalletId(wallet_id);
 
-        return ResponseEntity.ok(Map.of(
-                "id", wallet_id,
-                "stocks", stocks.stream().map(s -> Map.of(
-                        "name", s.getSymbol(),
-                        "quantity", s.getQuantity()
-                ))
-        ));
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("id", wallet_id);
+        response.put("stocks", stocks.stream().map(s -> {
+            Map<String, Object> stock = new LinkedHashMap<>();
+            stock.put("name", s.getSymbol());
+            stock.put("quantity", s.getQuantity());
+            return stock;
+        }).toList());
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{wallet_id}/stocks/{stock_name}")
