@@ -9,7 +9,7 @@ public enum ActionType {
     // loading from db - helper that enables lower-case saving into db for jackson
     @JsonCreator
     public static ActionType fromValue(String value){
-        return ActionType.valueOf(value);
+        return ActionType.valueOf(value.toUpperCase());
     }
 
     // saving in lower-case to db

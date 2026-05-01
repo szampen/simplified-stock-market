@@ -59,7 +59,7 @@ public class TradeService {
         walletStock.setQuantity(walletStock.getQuantity() - 1);
         walletRepo.save(walletStock);
 
-        bankStock.setQuantity(bankStock.getQuantity() - 1);
+        bankStock.setQuantity(bankStock.getQuantity() + 1);
         bankRepo.save(bankStock);
 
         auditLogService.log(walletId, bankStock.getSymbol(), 1, ActionType.SELL);
